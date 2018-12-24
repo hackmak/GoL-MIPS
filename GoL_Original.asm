@@ -1,27 +1,27 @@
-######################################################################################################
+#########################################################################################################
 #                            	      CONWAY'S GAME OF LIFE SIMULATION					#
 #		     	          Final Project for CS 3340.005, Fall 2018				#
-######################################################################################################
+#########################################################################################################
 #                                     	      ~Description~						#
 # 	This is a simulation of Conway's Game of Life, a zero-player game. The game follows the 4 	#
 # 	rules outlined below. To "play" just type in the number of the pattern you'd like to see!	#				
-######################################################################################################
+#########################################################################################################
 #                                          	 ~RULES~						#
 # 1. Any live cell with < 2 live neighbors dies, as if by underpopulation.				#
-# 2. Any live cell with 2 or 3 live neighbors lives on to the next generation.			#
+# 2. Any live cell with 2 or 3 live neighbors lives on to the next generation.				#
 # 3. Any live cell with > 3 live neighbors dies, as if by overpopulation.				#
 # 4. Any dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.		#
-######################################################################################################
+#########################################################################################################
 #                                          	 ~SETUP~						#
 # UNIT WIDTH: 8												#
 # UNIT HEIGHT: 8											#
 # DISPLAY WIDTH: 512											#
 # DISPLAY HEIGHT: 512											#
 # BASE ADDRESS: 0x10008000 ($gp)									#
-######################################################################################################
-#                                  ~Registers Used and What They Mean~				#		
-# a0 - x-coordinate of pixel (between 0-63). value corresponds to how many spaces to move RIGHT	#
-# a1 - y-coordinate of pixel (between 0-63). value corresponds to how many spaces to move DOWN	#
+#########################################################################################################
+#                                  ~Registers Used and What They Mean~					#		
+# a0 - x-coordinate of pixel (between 0-63). value corresponds to how many spaces to move RIGHT		#
+# a1 - y-coordinate of pixel (between 0-63). value corresponds to how many spaces to move DOWN		#
 # t1 - x-position of pixel (address)									#
 # t2 - y-position of pixel (address)									#
 # t3 - starting memory address										#
@@ -30,8 +30,7 @@
 # t9 - dead pixel array											#
 # s0 - user's menu selection										#
 # s1 - live/dead pixel array pointer									#										
-######################################################################################################
-
+#########################################################################################################
 .data
 	start:			.word		0x10008000
 	live:			.space		1200
@@ -44,7 +43,7 @@
 	oscOps:			.asciiz		"Oscillator Options:\n2. Blinker \n3. Pentadecathlon \n4. Pulsar \n"
 	glideOps:		.asciiz		"Spaceship Options: \n5. Glider \n6. Lightweight Spaceship \n"
 	gunOps:			.asciiz		"Gun Options: \n7. Glider Gun \n"
-	methOps:			.asciiz		"Methuselah Options (patterns that eventually stabilize): \n8. R-Pentomino \n9. Acorn \n10. Quit \n"
+	methOps:		.asciiz		"Methuselah Options (patterns that eventually stabilize): \n8. R-Pentomino \n9. Acorn \n10. Quit \n"
 	errorPrompt:		.asciiz		"Invalid menu choice. Please enter an integer between 1 and 10, inclusive: \n"
 
 .text
@@ -737,7 +736,7 @@ continue:
 	li $t7, 1			# initialize number of live pixels to 1, to allow for an initial run on the configuration
 	loopScreen:
 		beqz $t7, exit		# if num of live pixels = 0, exit the program.
-		jal updateScreen		# loop through entire screen while there are still live pixels on the screen & not OOB
+		jal updateScreen	# loop through entire screen while there are still live pixels on the screen & not OOB
 		j loopScreen
 exit:
 	la $v0, 10
@@ -858,7 +857,7 @@ nextGeneration:
 		lw $t0, livePixel 			# loads a white pixel	
 		sw $t0, ($v1)		 		# places pixel in bitmap display
 		sw $zero, ($t8)				# clear the address of the pixel we just created
-		addi $t8, $t8, 4				# go to next pixel
+		addi $t8, $t8, 4			# go to next pixel
 		j generate
 	
 	endNextGen:
@@ -883,13 +882,13 @@ countNeighbors:
 	li $t5, 0				# alive counter
 	######################################## check 1: top left ##########################################
 	checkOOB1: # OOB means Out of Bounds	
-		subi $a2, $a0, 1			# get neighbor's x-position
+		subi $a2, $a0, 1		# get neighbor's x-position
 		blt $a2, 0, checkOOB2		# if x-position is OOB on the left side of display, go to next neighbor		
-		subi $a3, $a1, 1			# get neighbor y-position
+		subi $a3, $a1, 1		# get neighbor y-position
 		blt $a3, 0, checkOOB2		# if y-position is OOB on the top of display, go to next neighbor
 		# if not OOB, check if this cell is alive or dead
 		jal checkColor
-		sne $t6, $v0, 0 			# if the cell != black (0 in hexadecimal), increment alive counter
+		sne $t6, $v0, 0 		# if the cell != black (0 in hexadecimal), increment alive counter
 		add $t5, $t5, $t6
 	########################################## check 2: up ##############################################
 	checkOOB2: 
@@ -902,9 +901,9 @@ countNeighbors:
 		add $t5, $t5, $t6
 	######################################## check 3: top right #########################################
 	checkOOB3:
-		addi $a2, $a0, 1			# get neighbor's x-position
+		addi $a2, $a0, 1		# get neighbor's x-position
 		bgt $a2, 63, checkOOB4		# if x-position is OOB on the right side of display, go to next neighbor
-		subi $a3, $a1, 1			# get neighbor y-position
+		subi $a3, $a1, 1		# get neighbor y-position
 		blt $a3, 0, checkOOB4		# if y-position is OOB on the top of display, go to next neighbor
 		# if not OOB, check if this cell is alive or dead
 		jal checkColor
