@@ -24,4 +24,4 @@ __BASE ADDRESS:__ 0x10008000 ($gp)
 4)
 Original - this is the original program I had created for the final project for my Computer Architecture class (Fall '18). The final project was open-ended, the requirement being that you needed a minimum of 500 lines of code. The main features of the original program is that the users can see the rules of the Game of Life unfolding in 9 hard-coded initial patterns.
 
-*Check the wiki for more information on the Game of Life and implementation details.
+__*Check the wiki for more information on the Game of Life and implementation details.__
