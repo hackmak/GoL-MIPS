@@ -1,8 +1,11 @@
 # Conway's Game of Life in MIPS Assembly Language
-##### Description:
+__John Conway's classic Game of Life* recreated in MIPS assembly language. Utilizes MARS' built-in Bitmap.__
 
-John Conway's classic Game of Life recreated in MIPS assembly language. Utilizes MARS' built-in Bitmap. To run this program, you will need to download MARS here: http://courses.missouristate.edu/KenVollmar/MARS/download.htm. 
+*Check the wiki for more information on the Game of Life and implementation details.
 
+###### Installation
+To run this program, you will need to download MARS here: http://courses.missouristate.edu/KenVollmar/MARS/download.htm. 
+###### How to Run the Game of Life
 Once doing so:
 
 1)
