@@ -98,6 +98,7 @@ main:
 	li $a0, 0				# stores how many spaces want to move RIGHT (range: 0 - 63)
 	li $a1, 0				# stores how many spaces we want to move DOWN (range: 0 - 63)
 
+################################################## SKIP TO LINE 736 FOR ACTUAL CODE #######################################################
 sl1:
 	subiu $sp, $sp, 4		
 	sw $ra, ($sp)				# push $ra to the stack
@@ -732,6 +733,8 @@ acorn:
 	addiu $sp, $sp, 4			# pop $ra from the stack	
 	j continue 
 	
+################################################ BEGINNING OF ACTUAL CODE #########################################################	
+
 continue:
 	li $t7, 1			# initialize number of live pixels to 1, to allow for an initial run on the configuration
 	loopScreen:
