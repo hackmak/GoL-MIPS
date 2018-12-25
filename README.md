@@ -28,6 +28,7 @@ This is the original program I had created for the final project for my Computer
 ###### Update
 This version includes the same 9 patterns as the original code but with added functionalities:
 
-- allows the user to create his/her own patterns by entering pixel coordinates (complete with input validation)
+- allows the user to create his/her own patterns by entering pixel coordinates
+- input validation for menu choices and pixel coordinates. Will not let user input duplicate coordinates.
 
 __*Check the wiki for more information on the Game of Life and implementation details.__
