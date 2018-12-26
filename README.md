@@ -11,15 +11,15 @@ Once doing so:
 2) Access the Bitmap through __Tools -> Bitmap Display__
 3) Configure the Bitmap like so:
 
-__UNIT WIDTH:__ 8									
+     __UNIT WIDTH:__ 8									
 
-__UNIT HEIGHT:__ 8								
+     __UNIT HEIGHT:__ 8								
 
-__DISPLAY WIDTH:__ 512							
+     __DISPLAY WIDTH:__ 512							
 
-__DISPLAY HEIGHT:__ 512								
+     __DISPLAY HEIGHT:__ 512								
 
-__BASE ADDRESS:__ 0x10008000 ($gp)	
+     __BASE ADDRESS:__ 0x10008000 ($gp)	
 
 4) Click the __Connect to MIPS__ button on the bottom left of the Bitmap Display.
 5) Press __F3__ to assemble then __F5__ to start running the program!
