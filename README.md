@@ -7,7 +7,7 @@ To run this program, you will need to download MARS [here](http://courses.missou
 ## How to Run the Game of Life
 Once doing so:
 
-1) Copy/paste the code into __File -> New__
+1) __File -> New__ then copy/paste the code
 2) Access the Bitmap through __Tools -> Bitmap Display__
 3) Configure the Bitmap like so:
 
@@ -25,7 +25,7 @@ __BASE ADDRESS:__ 0x10008000 ($gp)
 5) Press __F3__ to assemble then __F5__ to start running the program!
 
 ## How to Stop the Game of Life
-If you are on a regenerative??? pattern and get bored, simply hit the stop button. Don't forget to __reset__ the Bitmap!
+If you are watching a pattern and get bored, simply hit the stop button (or __F11__). Don't forget to click the __reset__ button on the Bitmap Display!
 ## GoL_Original vs. GoL_Update
 ###### Original
 This is the original program I had created as a final project for my Computer Architecture class (Fall '18). The final project was open-ended, the main requirement being a minimum of 500 lines of code. The main features of this program is that the user choose from 9 hard-coded initial patterns of various types (e.g. methuselahs, gliders, oscillators).
