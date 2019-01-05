@@ -1,26 +1,26 @@
-######################################################################################################
+#########################################################################################################
 #                            	      CONWAY'S GAME OF LIFE SIMULATION					#
-######################################################################################################
+#########################################################################################################
 #                                     	      ~Description~						#
 # 	This is a simulation of Conway's Game of Life, a zero-player game. The game follows the 4 	#
 # 	rules outlined below. To "play" just type in the number of the pattern you'd like to see!	#				
-######################################################################################################
+#########################################################################################################
 #                                          	 ~RULES~						#
 # 1. Any live cell with < 2 live neighbors dies, as if by underpopulation.				#
-# 2. Any live cell with 2 or 3 live neighbors lives on to the next generation.			#
+# 2. Any live cell with 2 or 3 live neighbors lives on to the next generation.				#
 # 3. Any live cell with > 3 live neighbors dies, as if by overpopulation.				#
 # 4. Any dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.		#
-######################################################################################################
+#########################################################################################################
 #                                          	 ~SETUP~						#
 # UNIT WIDTH: 8												#
 # UNIT HEIGHT: 8											#
 # DISPLAY WIDTH: 512											#
 # DISPLAY HEIGHT: 512											#
 # BASE ADDRESS: 0x10008000 ($gp)									#
-######################################################################################################
-#                                  ~Registers Used and What They Mean~				#		
-# a0 - x-coordinate of pixel (between 0-63). value corresponds to how many spaces to move RIGHT	#
-# a1 - y-coordinate of pixel (between 0-63). value corresponds to how many spaces to move DOWN	#
+#########################################################################################################
+#                                  ~Registers Used and What They Mean~					#		
+# a0 - x-coordinate of pixel (between 0-63). value corresponds to how many spaces to move RIGHT		#
+# a1 - y-coordinate of pixel (between 0-63). value corresponds to how many spaces to move DOWN		#
 # t1 - x-position of pixel (address)									#
 # t2 - y-position of pixel (address)									#
 # t3 - starting memory address										#
@@ -29,14 +29,14 @@
 # t9 - dead pixel array											#
 # s0 - user's menu selection										#
 # s1 - live/dead pixel array pointer									#										
-######################################################################################################
+#########################################################################################################
 
 .data
 	start:			.word		0x10008000
 	live:			.space		1200
 	dead:			.space		1200	
 	livePixel:		.word 		16777215		# 0xFFFFFFFF  (white)
-	deadPixel:		.word		0x00000000	# 0 (black)
+	deadPixel:		.word		0x00000000		# 0 (black)
 	selection:		.word		0
 	x:			.word		0
 	y:			.word		0
@@ -45,21 +45,21 @@
 	hexPrompt:		.asciiz		"Please enter any color (except black, for ease of reading) in hexadecimal: Ox"
 	hexError:		.asciiz		"\nInvalid selection. "
 	mainPrompt:		.asciiz		"Would you like to:\n1. Create your own pattern?\n2. See an existing pattern? \n3. Return to previous menu\n"
-	mainErrorPrompt:		.asciiz		"Invalid menu choice. Please enter an integer between 1 and 3, inclusive: \n"
+	mainErrorPrompt:	.asciiz		"Invalid menu choice. Please enter an integer between 1 and 3, inclusive: \n"
 	patternPrompt:		.asciiz		"Please type one of the following integers to see the resulting configuration: \n"
 	stillOps:		.asciiz		"Still Life Options: \n1. Block \n"
 	oscOps:			.asciiz		"Oscillator Options:\n2. Blinker \n3. Pentadecathlon \n4. Pulsar \n"
 	glideOps:		.asciiz		"Spaceship Options: \n5. Glider \n6. Lightweight Spaceship \n"
 	gunOps:			.asciiz		"Gun Options: \n7. Glider Gun \n"
-	methOps:			.asciiz		"Methuselah Options (patterns that eventually stabilize): \n8. R-Pentomino \n9. Acorn \n10. Return to previous menu \n11. Quit \n"
+	methOps:		.asciiz		"Methuselah Options (patterns that eventually stabilize): \n8. R-Pentomino \n9. Acorn \n10. Return to previous menu \n11. Quit \n"
 	errorPrompt:		.asciiz		"Invalid menu choice. Please enter an integer between 1 and 11, inclusive: \n"
 	xCoordPrompt:		.asciiz		"Please enter the x-coordinate of a new pixel (integer between 0-63, inclusive) or -1 if you're done: \n"
 	yCoordPrompt:		.asciiz		"Please enter the y-coordinate of a new pixel (integer between 0-63, inclusive): \n"
 	xOOBPrompt:		.asciiz		"Selected x-coordinate is out of bounds. "
 	yOOBPrompt:		.asciiz		"Selected y-coordinate is out of bounds. "
-	dupErrorPrompt1:		.asciiz		"You have already entered a pixel at position ("
-	dupErrorPrompt2:		.asciiz		", "
-	dupErrorPrompt3:		.asciiz		"). \n"
+	dupErrorPrompt1:	.asciiz		"You have already entered a pixel at position ("
+	dupErrorPrompt2:	.asciiz		", "
+	dupErrorPrompt3:	.asciiz		"). \n"
 .text
 main:	
 ################################################ COLOR CHANGE MENU ######################################################
@@ -249,7 +249,7 @@ build:
 		lw $ra, ($sp)
 		addiu $sp, $sp, 4		# pop $ra from the stack	
 		j continue 
-	
+########################################### HARDCODED PATTERNS START HERE ###############################################			
 sl1:
 	subiu $sp, $sp, 4		
 	sw $ra, ($sp)				# push $ra to the stack
@@ -882,13 +882,14 @@ acorn:
 	
 	lw $ra, ($sp)
 	addiu $sp, $sp, 4		# pop $ra from the stack	
-	j continue 
-	
+	j continue 	
+############################################ END OF HARDCODED PATTERNS ##################################################		
+################################################ START OF GAME CODE #####################################################			
 continue:
 	li $t7, 1			# initialize number of live pixels to 1, to allow for an initial run on the configuration
 	loopScreen:
 		beqz $t7, exit		# if num of live pixels = 0, exit the program.
-		jal updateScreen		# loop through entire screen while there are still live pixels on the screen & not OOB
+		jal updateScreen	# loop through entire screen while there are still live pixels on the screen & not OOB
 		j loopScreen
 exit:
 	la $v0, 10
@@ -948,8 +949,8 @@ updateScreen:
 	checkPixel:
 		jal checkSelfColor
 		beqz $v1, black				# if the pixel is black
-	colored:						# otherwise, it's colored.
-		addi $t7, $t7, 1				# since it's colored, we increment the live pixel counter
+	colored:					# otherwise, it's colored.
+		addi $t7, $t7, 1			# since it's colored, we increment the live pixel counter
 		jal countNeighbors	
 		blt $t5, 2, markDead 			# cell dies of loneliness if # of neighbors < 2 (0, 1)
 		bgt $t5, 3, markDead			# cell dies from overpopulation if # of neighbors > 3 (4+)
@@ -957,8 +958,8 @@ updateScreen:
 		markDead:
 			jal XYtoAddress 
 			sw $v1, ($t9)			# store current live pixel into dead array
-			addi $t9, $t9, 4			# go to next position in array	
-			subi $t7, $t7, 1			# one less live cell now
+			addi $t9, $t9, 4		# go to next position in array	
+			subi $t7, $t7, 1		# one less live cell now
 			j checkOOB			# continue looping through screen.
 		
 	black:	
