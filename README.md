@@ -37,5 +37,3 @@ This version includes the same 9 patterns as the original but with added functio
 What I'm working on currently (as of 12/24):
 - letting the user choose what color pixel they'd like the game to proceed in
 - creating the illusion of an infinite grid by letting patterns go past the borders of the grid, instead of sticking to the edge
-
-__*Check the wiki for more information on the Game of Life and implementation details.__
